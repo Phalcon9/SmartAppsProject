@@ -3,6 +3,7 @@ package com.example.smartbookapps;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +23,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ViewStudentDetails extends AppCompatActivity {
 
@@ -30,12 +32,15 @@ public class ViewStudentDetails extends AppCompatActivity {
     MyStudentAdapter myStudentAdapter;
     FirebaseFirestore db;
     FirebaseAuth firebaseAuth;
+    SearchView searchView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_view_student);
 
         recyclerView = findViewById (R.id.recylerView);
+        searchView = findViewById (R.id.search_bar);
+        searchView.clearFocus ();
         recyclerView.setHasFixedSize (true);
         recyclerView.setLayoutManager (new LinearLayoutManager (this));
 
@@ -45,6 +50,33 @@ public class ViewStudentDetails extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance ();
         recyclerView.setAdapter (myStudentAdapter);
         EventChangeListener();
+
+        searchView.setOnQueryTextListener (new SearchView.OnQueryTextListener () {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                    return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return true;
+            }
+        });
+    }
+
+    private void filterList(String text) {
+        ArrayList<StudentUsers> filteredStudentsList = new ArrayList<> ();
+        for (StudentUsers studentUsers : studentUsersArrayList){
+            if (studentUsers.getfName ().toLowerCase ().contains (text.toLowerCase ()) || studentUsers.getMatricNum ().contains (text.toLowerCase ())){
+                filteredStudentsList.add (studentUsers);
+            }
+        }
+        if (filteredStudentsList.isEmpty ()){
+            Toast.makeText (this, "Student Not found", Toast.LENGTH_SHORT).show ();
+        } else {
+            myStudentAdapter.setStudentFilteredList (filteredStudentsList);
+        }
     }
 
     private void EventChangeListener() {
@@ -76,24 +108,6 @@ public class ViewStudentDetails extends AppCompatActivity {
 
         return;
     }
-//        db.collection ("student").orderBy ("matricNum", Query.Direction.ASCENDING)
-//                .addSnapshotListener (new EventListener<QuerySnapshot> () {
-//                    @Override
-//                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-//                        if (error != null){
-//                            Log.e("Firestore Error", error.getMessage ());
-//                            return;
-//                        }
-//                        for (DocumentChange dc : value.getDocumentChanges ()){
-//                            if (dc.getType ()== DocumentChange.Type.ADDED){
-//                                studentUsersArrayList.add (dc.getDocument ().toObject (StudentUsers.class));
-//                            }
-//                            else if (dc.getType ()== DocumentChange.Type.REMOVED){
-//                                studentUsersArrayList.remove (dc.getDocument ().toObject (StudentUsers.class));
-//                            }
-//                            myStudentAdapter.notifyDataSetChanged ();
-//                        }
-//                    }
-//                });
+
     }
 }

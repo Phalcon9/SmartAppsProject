@@ -1,21 +1,20 @@
 {
   "project_info": {
-    "project_number": "351225035970",
-    "firebase_url": "https://smartbooksapp-default-rtdb.firebaseio.com",
-    "project_id": "smartbooksapp",
-    "storage_bucket": "smartbooksapp.appspot.com"
+    "project_number": "861803505269",
+    "project_id": "smartapps-26d5c",
+    "storage_bucket": "smartapps-26d5c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:351225035970:android:85cdef88f9479ac05dcf5b",
+        "mobilesdk_app_id": "1:861803505269:android:7b6cbfd1e3d145534cfa3c",
         "android_client_info": {
           "package_name": "com.example.smartbookapps"
         }
       },
       "oauth_client": [
         {
-          "client_id": "351225035970-l8l8onjc5o521nehdvo79ld8vgf547gf.apps.googleusercontent.com",
+          "client_id": "861803505269-l5r00bcidul32a23g8mrjm0in2a0v2q8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.smartbookapps",
@@ -23,20 +22,20 @@
           }
         },
         {
-          "client_id": "351225035970-pl5lbpjbauqg5cm6tan5d8l32ts1isei.apps.googleusercontent.com",
+          "client_id": "861803505269-9ggvn9qlu0t1bo0p6p8patkfcvvu5vrl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBlcj7bBrj4DvfxeM7NG55981UudFk2dZY"
+          "current_key": "AIzaSyC-euNx8SnQLDCF5BPnOE-2yern4RdDE-w"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "351225035970-pl5lbpjbauqg5cm6tan5d8l32ts1isei.apps.googleusercontent.com",
+              "client_id": "861803505269-9ggvn9qlu0t1bo0p6p8patkfcvvu5vrl.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

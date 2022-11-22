@@ -30,11 +30,12 @@ public class MyStudentAdapter extends RecyclerView.Adapter<MyStudentAdapter.MyVi
     Context context;
     List<StudentUsers> studentUsersArrayList;
     FirebaseFirestore firebaseFirestore;
-    FirebaseUser firebaseUser;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
     FirebaseAuth firebaseAuth;
 
+    public void setStudentFilteredList(List<StudentUsers> studentFilteredList){
+        this.studentUsersArrayList = studentFilteredList;
+        notifyDataSetChanged ();
+    }
 
     public MyStudentAdapter(Context context, List<StudentUsers> studentUsersArrayList) {
         this.context = context;
