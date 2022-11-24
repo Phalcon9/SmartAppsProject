@@ -42,9 +42,11 @@ public class AdminLogin extends AppCompatActivity {
         fUser = fAuth.getCurrentUser ();
         loginAdmin = findViewById (R.id.loginAd);
 
+
         loginAdmin.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View v) {
+
                 checkField(userNameAdmin);
                 checkField(passwordAdmin);
 
@@ -85,7 +87,6 @@ public class AdminLogin extends AppCompatActivity {
 
 
     }
-
 
     private boolean checkField(EditText textField) {
 

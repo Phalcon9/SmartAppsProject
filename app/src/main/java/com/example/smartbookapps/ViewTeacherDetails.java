@@ -3,6 +3,7 @@ package com.example.smartbookapps;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,6 +32,7 @@ public class ViewTeacherDetails extends AppCompatActivity {
     MyTeacherAdapter myTeacherAdapter;
     FirebaseFirestore db;
     FirebaseAuth firebaseAuth;
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +43,41 @@ public class ViewTeacherDetails extends AppCompatActivity {
         recyclerView.setHasFixedSize (true);
         recyclerView.setLayoutManager (new LinearLayoutManager (this));
 
+        searchView = findViewById (R.id.search_barT);
+        searchView.clearFocus ();
         db = FirebaseFirestore.getInstance ();
         teacherUsersArrayList = new ArrayList<TeacherUsers> ();
         myTeacherAdapter = new MyTeacherAdapter (ViewTeacherDetails.this, teacherUsersArrayList);
 
         recyclerView.setAdapter (myTeacherAdapter);
         EventChangeListener();
+
+        searchView.setOnQueryTextListener (new SearchView.OnQueryTextListener () {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return true;
+            }
+        });
+    }
+
+    private void filterList(String text) {
+        ArrayList<TeacherUsers> filteredTeacherList = new ArrayList<> ();
+        for (TeacherUsers teacherUsers : teacherUsersArrayList){
+            if (teacherUsers.getEmail ().toLowerCase ().contains (text.toLowerCase ()) ){
+                filteredTeacherList.add (teacherUsers);
+            }
+        }
+        if (filteredTeacherList.isEmpty ()){
+            Toast.makeText (this, "Teacher Not found", Toast.LENGTH_SHORT).show ();
+        } else {
+            myTeacherAdapter.setTeacherFilteredList (filteredTeacherList);
+        }
     }
 
     private void EventChangeListener() {
@@ -56,43 +87,25 @@ public class ViewTeacherDetails extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful ()){
-
                             for (DocumentSnapshot snapshot : task.getResult ()){
                                 teacherUsersArrayList.add (new TeacherUsers (
                                         snapshot.getString ("Name"),
                                         snapshot.getString ("Email"),
-                                        snapshot.getString ("password"),
+                                        snapshot.getString ("employeeNum"),
                                         snapshot.getString ("phoneNum"),
                                         snapshot.getString ("category"),
                                         snapshot.getId ()
                                 ));
                             }
                             myTeacherAdapter.notifyDataSetChanged ();
-                        }else
+                        }
+                        else
                         {
                             Toast.makeText (ViewTeacherDetails.this, "Not found", Toast.LENGTH_SHORT).show ();
                         }
                     }
                 });
-//        db.collection ("teacher").orderBy ("employeeNum", Query.Direction.ASCENDING)
-//                .addSnapshotListener (new EventListener<QuerySnapshot> () {
-//                    @Override
-//                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-//                        if (error != null){
-//                            Log.e("Firestore error", error.getMessage ());
-//                            return;
-//                        }
-//                        for (DocumentChange dc : value.getDocumentChanges ()){
-//                            if (dc.getType ()== DocumentChange.Type.ADDED){
-//                                teacherUsersArrayList.add (dc.getDocument ().toObject (TeacherUsers.class));
-//                            }
-//                            else if (dc.getType ()== DocumentChange.Type.REMOVED){
-//                                teacherUsersArrayList.remove (dc.getDocument ().toObject (TeacherUsers.class));
-//                            }
-//                            myTeacherAdapter.notifyDataSetChanged ();
-//                        }
-//
-//                    }
-//                });
+
+
     }
 }

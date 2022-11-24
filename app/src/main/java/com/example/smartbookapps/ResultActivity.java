@@ -2,6 +2,7 @@ package com.example.smartbookapps;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,7 +30,7 @@ public class  ResultActivity extends AppCompatActivity {
     private MyVotingResultAdapter adapter;
     FirebaseFirestore firebaseFirestore;
     private TextView warningTxt;
-
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +39,11 @@ public class  ResultActivity extends AppCompatActivity {
 
         resultRV = findViewById (R.id.result_rv);
         firebaseFirestore = FirebaseFirestore.getInstance ();
-
-
         list = new ArrayList<> ();
         adapter = new MyVotingResultAdapter (ResultActivity.this, list);
         resultRV.setLayoutManager (new LinearLayoutManager (ResultActivity.this));
         resultRV.setAdapter (adapter);
+
 
         if (FirebaseAuth.getInstance ().getCurrentUser () !=null){
             firebaseFirestore.collection ("VotingCandidate")
@@ -70,6 +70,19 @@ public class  ResultActivity extends AppCompatActivity {
                     });
         }
     }
-
+    private void filterList(String text) {
+        List<CandidateModel> filterCanditateListS = new ArrayList<> ();
+        for (CandidateModel candidateModel: list){
+            if (candidateModel.getName ().toLowerCase ().contains (text.toLowerCase ())){
+                filterCanditateListS.add (candidateModel);
+            }
+        }
+        if (filterCanditateListS.isEmpty ()){
+            Toast.makeText (this, "Candidate not found", Toast.LENGTH_SHORT).show ();
+        }
+        else {
+            adapter.setFilteredCandidateListS (filterCanditateListS);
+        }
+    }
 
 }

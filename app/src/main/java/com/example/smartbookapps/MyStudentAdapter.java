@@ -28,16 +28,16 @@ import java.util.List;
 public class MyStudentAdapter extends RecyclerView.Adapter<MyStudentAdapter.MyViewHolder> {
 
     Context context;
-    List<StudentUsers> studentUsersArrayList;
+    ArrayList<StudentUsers> studentUsersArrayList;
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
 
-    public void setStudentFilteredList(List<StudentUsers> studentFilteredList){
+    public void setStudentFilteredList(ArrayList<StudentUsers> studentFilteredList){
         this.studentUsersArrayList = studentFilteredList;
         notifyDataSetChanged ();
     }
 
-    public MyStudentAdapter(Context context, List<StudentUsers> studentUsersArrayList) {
+    public MyStudentAdapter(Context context, ArrayList<StudentUsers> studentUsersArrayList) {
         this.context = context;
         this.studentUsersArrayList = studentUsersArrayList;
         firebaseFirestore = FirebaseFirestore.getInstance ();
@@ -51,19 +51,14 @@ public class MyStudentAdapter extends RecyclerView.Adapter<MyStudentAdapter.MyVi
         return new MyViewHolder (v);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyStudentAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-
-        holder.email.setText (" FullName  : " + studentUsersArrayList.get(position).Email);
-        holder.phone.setText (" Category : "+studentUsersArrayList.get (position).phoneNum);
-        holder.firstName.setText (" Matriculation No: "+studentUsersArrayList.get (position).fName);
-        holder.matricNum.setText ("Phone : "+studentUsersArrayList.get (position).matricNum);
-        holder.category.setText (" Email: "+studentUsersArrayList.get (position).category);
-//        holder.firstName.setText ("Fullname : "+studentUsersArrayList.get (position).fName);
-//        holder.matricNum.setText ("Matriculation Number : "+studentUsersArrayList.get (position).matricNum);
-//        holder.category.setText ("Category : "+studentUsersArrayList.get (position).category);
-//        holder.phone.setText ("Phone : "+studentUsersArrayList.get (position).phoneNum);
-//        holder.password1.setText ("password"+studentUsersArrayList.get (position).password);
+        holder.firstName1.setText ("Matriculation Number  : " + studentUsersArrayList.get(position).fName);
+        holder.matricNum1.setText ("Phone Number: "+ studentUsersArrayList.get (position).matricNum);
+        holder.category1.setText (" Category : "+studentUsersArrayList.get (position).category);
+        holder.phone.setText ("Category : "+studentUsersArrayList.get (position).phoneNum);
+        holder.email1.setText (" Name: "+studentUsersArrayList.get (position).Email);
 
         holder.delete.setOnLongClickListener (new View.OnLongClickListener () {
             @Override
@@ -112,17 +107,16 @@ public class MyStudentAdapter extends RecyclerView.Adapter<MyStudentAdapter.MyVi
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView matricNum, firstName, phone, category, email;
-        ImageView edit, delete;
+        TextView matricNum1, firstName1, phone, category1, email1;
+        ImageView  delete;
 
         public MyViewHolder(@NonNull View itemView) {
             super (itemView);
-            firstName = itemView.findViewById (R.id.namess);
-            matricNum = itemView.findViewById (R.id.matricNum);
+            firstName1 = itemView.findViewById (R.id.namess);
+            matricNum1 = itemView.findViewById (R.id.matricNum);
             phone = itemView.findViewById (R.id.phoneNum);
-            category = itemView.findViewById (R.id.cate);
-            edit = itemView.findViewById (R.id.edit);
-            email = itemView.findViewById (R.id.email);
+            category1 = itemView.findViewById (R.id.cate);
+            email1 = itemView.findViewById (R.id.email);
             delete = itemView.findViewById (R.id.delete);
         }
     }

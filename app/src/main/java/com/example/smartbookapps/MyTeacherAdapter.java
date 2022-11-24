@@ -31,6 +31,10 @@ public class MyTeacherAdapter extends RecyclerView.Adapter<MyTeacherAdapter.MyTe
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
 
+    public void setTeacherFilteredList(ArrayList<TeacherUsers> teacherFilteredList){
+        this.teacherUsersArrayList = teacherFilteredList;
+        notifyDataSetChanged ();
+    }
     public  MyTeacherAdapter(Context context, ArrayList<TeacherUsers> teacherUsersArrayList){
         this.context = context;
         this.teacherUsersArrayList = teacherUsersArrayList;
@@ -46,16 +50,13 @@ public class MyTeacherAdapter extends RecyclerView.Adapter<MyTeacherAdapter.MyTe
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyTeacherAdapter.MyTeacherViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull MyTeacherAdapter.MyTeacherViewHolder holder, int position) {
         TeacherUsers teacherUsers = teacherUsersArrayList.get (position);
-        holder.email.setText (" FullName  : " + teacherUsers.Email);
-        holder.phone.setText (" Category : "+teacherUsers.phoneNum);
-        holder.fullName.setText (" Employee ID: "+teacherUsers.Name);
-        holder.employeeId.setText ("Phone : "+teacherUsers.employeeNum);
+        holder.fullName.setText ("Employee Number : "+teacherUsers.Name);
+        holder.employeeId.setText ("Phone Number : "+teacherUsers.employeeNum);
+        holder.email.setText ("FullName  : " + teacherUsers.Email);
+        holder.phone.setText ("Category : "+teacherUsers.phoneNum);
         holder.category.setText (" Email: "+teacherUsers.category);
-
-
-
 
         holder.delete.setOnLongClickListener (new View.OnLongClickListener () {
             @Override

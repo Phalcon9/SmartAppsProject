@@ -27,6 +27,11 @@ public class MyVotingResultAdapter extends RecyclerView.Adapter<MyVotingResultAd
      List<CandidateModel> list;
      private FirebaseFirestore firebaseFirestore;
 
+
+    public void setFilteredCandidateListS(List<CandidateModel> filteredCandidateListS){
+        this.list =filteredCandidateListS;
+        notifyDataSetChanged ();
+    }
     public MyVotingResultAdapter(Context context, List<CandidateModel> list) {
         this.context = context;
         this.list = list;

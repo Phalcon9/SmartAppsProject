@@ -2,29 +2,29 @@ package com.example.smartbookapps;
 
 public class StudentUsers {
 
-    String Email, category, fName, matricNum, password, phoneNum, id;
+    String Email, category, fName, matricNum, phoneNum, id;
     int count= 0;
 
 
-    public StudentUsers(){}
-    public StudentUsers(String email, String category, String fName, String matricNum,  String phoneNum, String password, String id) {
+
+    public StudentUsers(String email, String category, String fName, String matricNum,  String phoneNum,  String id) {
 
         this.Email = email;
         this.category = category;
         this.fName = fName;
         this.matricNum = matricNum;
-        this.password = password;
         this.phoneNum = phoneNum;
         this.id = id;
     }
+    public StudentUsers(){}
 
-    public String getPassword() {
-        return password;
-    }
+//    public String getPassword() {
+//        return password;
+//    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
 
     public int getCount() {
         return count;

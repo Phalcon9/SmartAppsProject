@@ -32,9 +32,13 @@ public class MyVotingResultAdapterAdmin  extends RecyclerView.Adapter<MyVotingRe
     List<CandidateModel> list;
     private FirebaseFirestore firebaseFirestore;
 
+    public void setFilteredCandidateList(List<CandidateModel> filteredCandidateList){
+        this.list =filteredCandidateList;
+        notifyDataSetChanged ();
+    }
+
     public MyVotingResultAdapterAdmin(Context context, List<CandidateModel> list) {
         this.context = context;
-
         this.list = list;
         firebaseFirestore =FirebaseFirestore.getInstance ();
     }
@@ -52,21 +56,21 @@ public class MyVotingResultAdapterAdmin  extends RecyclerView.Adapter<MyVotingRe
         holder.candidate_name.setText ("Candidate Name :  "+list.get (position).getName ());
         holder.candidate_department.setText ("Department :  "+list.get (position).getDepartment ());
         holder.candidate_Post.setText ("Position :  "+list.get (position).getPost ());
-        holder.candidate_about.setText ("Id :  "+list.get (position).getAbout ());
+        holder.candidate_about.setText ("About :  "+list.get (position).getAbout ());
 
-//        firebaseFirestore.collection ("VotingCandidate/"+list.get (position).getId ()+"/Vote")
-//                .addSnapshotListener (new EventListener<QuerySnapshot> () {
-//                    @Override
-//                    public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException error) {
-//                        if (!documentSnapshots.isEmpty ()){
-//                            int count = documentSnapshots.size ();
-//                            CandidateModel candidateModel1 = list.get (position);
-//                            candidateModel1.setCount (count);
-//                            list.set (position,candidateModel1);
-//                            notifyDataSetChanged ();
-//                        }
-//                    }
-//                });
+        firebaseFirestore.collection ("VotingCandidate/"+list.get (position).getId ()+"/Vote")
+                .addSnapshotListener (new EventListener<QuerySnapshot> () {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException error) {
+                        if (!documentSnapshots.isEmpty ()){
+                            int count = documentSnapshots.size ();
+                            CandidateModel candidateModel1 = list.get (position);
+                            candidateModel1.setCount (count);
+                            list.set (position,candidateModel1);
+                            notifyDataSetChanged ();
+                        }
+                    }
+                });
         holder.deleteBtn.setOnLongClickListener (new View.OnLongClickListener () {
             @Override
             public boolean onLongClick(View v) {
@@ -118,7 +122,6 @@ public class MyVotingResultAdapterAdmin  extends RecyclerView.Adapter<MyVotingRe
         private Button deleteBtn;
         private CardView card;
 
-        //        private Button VoteBtn;
         public MyCandidateViewHolderR(@NonNull View itemView) {
             super (itemView);
             candidate_ID = itemView.findViewById (R.id.textView2);

@@ -47,7 +47,7 @@ public class ClassSet extends AppCompatActivity {
                                             snapshot.getString ("matricNum"),
                                             snapshot.getString ("phoneNum"),
                                             snapshot.getString ("Email"),
-                                            snapshot.getString ("password"),
+//                                            snapshot.getString ("password"),
                                             snapshot.getString ("category"),
                                             snapshot.getId ()
                                     ));
