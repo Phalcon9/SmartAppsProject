@@ -11,8 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -55,10 +57,24 @@ public class AdminLogin extends AppCompatActivity {
                     fAuth.signInWithEmailAndPassword (userNameAdmin.getText ().toString (), passwordAdmin.getText ().toString () ).addOnSuccessListener (new OnSuccessListener<AuthResult> () {
                         @Override
                         public void onSuccess(AuthResult authResult) {
-
-                            checkUserAccessLevel(authResult.getUser ().getUid ());
-
-                            Toast.makeText (AdminLogin.this, "Success", Toast.LENGTH_SHORT).show ();
+                            FirebaseUser user = FirebaseAuth.getInstance ().getCurrentUser ();
+                            String currentid = user.getUid ();
+                            DocumentReference documentReference =  fStore.collection ("Admin").document (currentid);
+                            documentReference.get ().addOnCompleteListener (new OnCompleteListener<DocumentSnapshot> () {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.getResult ().exists ()){
+                                        boolean isAdmin = task.getResult ().getBoolean ("isAdmin");
+                                        if (isAdmin = true){
+                                            startActivity (new Intent (getApplicationContext (), AdminActivity.class));
+                                            Toast.makeText (AdminLogin.this, "Success", Toast.LENGTH_SHORT).show ();
+                                        }
+                                        else {
+                                            Toast.makeText (AdminLogin.this, "Wrong Details", Toast.LENGTH_SHORT).show ();
+                                        }
+                                    }
+                                }
+                            });
                         }
                     }).addOnFailureListener (new OnFailureListener () {
                         @Override
@@ -74,17 +90,34 @@ public class AdminLogin extends AppCompatActivity {
         }
 
     private void checkUserAccessLevel(String uid) {
+
         DocumentReference df = fStore.collection ("Admin").document (uid);
+
+//        DocumentReference df1 = fStore.collection ("Teacher").document (uid);
+//        DocumentReference df2 = fStore.collection ("Student").document (uid);
+
+
         df.get ().addOnSuccessListener (new OnSuccessListener<DocumentSnapshot> () {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-//               if (documentSnapshot.getString ("category") != "studentt"){
                    startActivity (new Intent (getApplicationContext (), AdminActivity.class));
                    finish ();
-               }
-//            }
+            }
         });
-
+//        df1.get ().addOnSuccessListener (new OnSuccessListener<DocumentSnapshot> () {
+//            @Override
+//            public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                startActivity (new Intent (getApplicationContext (), TeacherPanel.class));
+//                finish ();
+//            }
+//        });
+//        df2.get ().addOnSuccessListener (new OnSuccessListener<DocumentSnapshot> () {
+//            @Override
+//            public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                startActivity (new Intent (getApplicationContext (), MainActivity.class));
+//                finish ();
+//            }
+//        });
 
     }
 

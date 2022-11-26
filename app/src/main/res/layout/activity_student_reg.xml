@@ -117,6 +117,13 @@
         android:maxLines="1"
         android:paddingStart="20dp"
         android:paddingEnd="0dp" />
+    <TextView
+        android:id="@+id/isStudent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text="true"
+        />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/registerButton"

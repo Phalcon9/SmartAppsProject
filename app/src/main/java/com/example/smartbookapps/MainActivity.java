@@ -14,8 +14,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -65,9 +67,30 @@ public class MainActivity extends AppCompatActivity {
                     fAuth.signInWithEmailAndPassword (username.getText ().toString (), password.getText ().toString () ).addOnSuccessListener (new OnSuccessListener<AuthResult> () {
                         @Override
                         public void onSuccess(AuthResult authResult) {
-                            checkUserAccessLevel(authResult.getUser ().getUid ());
+//                            checkUserAccessLevel(authResult.getUser ().getUid ());
+                            FirebaseUser user = FirebaseAuth.getInstance ().getCurrentUser ();
+                            String currentid = user.getUid ();
+                            DocumentReference documentReference =  fStore.collection ("student").document (currentid);
+                            documentReference.get ().addOnCompleteListener (new OnCompleteListener<DocumentSnapshot> () {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.getResult ().exists ()){
+                                        boolean isStudent = task.getResult ().getBoolean ("isStudent");
+                                        if (isStudent = true){
+                                            startActivity (new Intent (getApplicationContext (), StudentPanel.class));
+                                            Toast.makeText (MainActivity.this, "Success", Toast.LENGTH_SHORT).show ();
+                                        }
+                                        else if (!isStudent){
+                                            Toast.makeText (MainActivity.this, "Wrong Details", Toast.LENGTH_SHORT).show ();
+                                        }
+                                    }
+//                                    else {
+//                                        Toast.makeText (MainActivity.this, "", Toast.LENGTH_SHORT).show ();
+//                                    }
+                                }
+                            });
 
-                            Toast.makeText (MainActivity.this, "Success", Toast.LENGTH_SHORT).show ();
+//                            Toast.makeText (MainActivity.this, "Success", Toast.LENGTH_SHORT).show ();
                         }
                     }).addOnFailureListener (new OnFailureListener () {
                         @Override
@@ -79,24 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
-
-
-        private void checkUserAccessLevel(String uid) {
-            DocumentReference df = fStore.collection ("Student").document (uid);
-            df.get ().addOnSuccessListener (new OnSuccessListener<DocumentSnapshot> () {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-//                    if (documentSnapshot.getString ("category") != "teacher"){
-                        startActivity (new Intent (getApplicationContext (), StudentPanel.class));
-                        finish ();
-                    }
-//                }
-            });
-                    }
-
 
     private boolean checkField(EditText textField) {
 

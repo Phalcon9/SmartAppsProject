@@ -10,8 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,12 +49,29 @@ public class TeacherLogin extends AppCompatActivity {
 
                     if (valid){
 
-                        fAuth.signInWithEmailAndPassword (userNameTeacher.getText ().toString (), passwordTeacher.getText ().toString () ).addOnSuccessListener (new OnSuccessListener<AuthResult> () {
+                        fAuth.signInWithEmailAndPassword (userNameTeacher.getText ().toString (), passwordTeacher.getText ().toString () )
+                                .addOnSuccessListener (new OnSuccessListener<AuthResult> () {
                             @Override
                             public void onSuccess(AuthResult authResult) {
-                                checkUserAccessLevel(authResult.getUser ().getUid ());
+                                FirebaseUser user = FirebaseAuth.getInstance ().getCurrentUser ();
+                                String currentid = user.getUid ();
 
-                                Toast.makeText (TeacherLogin.this, "Success", Toast.LENGTH_SHORT).show ();
+                                DocumentReference documentReference =  fStore.collection ("teacher").document (currentid);
+                                documentReference.get ().addOnCompleteListener (new OnCompleteListener<DocumentSnapshot> () {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.getResult ().exists ()){
+                                            boolean isTeacher = task.getResult ().getBoolean ("isTeacher");
+                                            if (isTeacher = true){
+                                                startActivity (new Intent (getApplicationContext (), TeacherPanel.class));
+                                                Toast.makeText (TeacherLogin.this, "Success", Toast.LENGTH_SHORT).show ();
+                                            }
+                                            else {
+                                                Toast.makeText (TeacherLogin.this, "Wrong Details", Toast.LENGTH_SHORT).show ();
+                                            }
+                                        }
+                                    }
+                                });
                             }
                         }).addOnFailureListener (new OnFailureListener () {
                             @Override
@@ -65,24 +84,7 @@ public class TeacherLogin extends AppCompatActivity {
             });
         }
 
-        private void checkUserAccessLevel(String uid) {
-            DocumentReference df = fStore.collection ("Teacher").document (uid);
-            df.get ().addOnSuccessListener (new OnSuccessListener<DocumentSnapshot> () {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-//                    if (documentSnapshot.getString ("category") != "studentt"){
-                        startActivity (new Intent (getApplicationContext (), TeacherPanel.class));
-                        finish ();
-                    }
-//                }
-            });
-
-
-        }
-
-
         private boolean checkField(EditText textField) {
-
             if (textField.getText ().toString ().isEmpty ()){
                 textField.setError ("Error");
                 valid = false;
@@ -91,5 +93,4 @@ public class TeacherLogin extends AppCompatActivity {
             }
             return valid;
         }
-
     }

@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MyStudentAdapter extends RecyclerView.Adapter<MyStudentAdapter.MyViewHolder> {
 
@@ -70,8 +71,8 @@ public class MyStudentAdapter extends RecyclerView.Adapter<MyStudentAdapter.MyVi
                         .setPositiveButton ("Yes", new DialogInterface.OnClickListener () {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
-                               firebaseFirestore.collection ("student").document (studentUsersArrayList.get (position).getId () )
+                                String uid = Objects.requireNonNull (firebaseAuth.getCurrentUser ()).getUid ();
+                               firebaseFirestore.collection ("student/"+uid+"/student's attendance").document (studentUsersArrayList.get (position).getId () )
                                         .delete ()
                                        .addOnCompleteListener (new OnCompleteListener<Void> () {
                                             @Override

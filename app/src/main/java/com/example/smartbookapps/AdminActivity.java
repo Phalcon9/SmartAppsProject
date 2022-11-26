@@ -94,14 +94,9 @@ public class AdminActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart ();
-
         FirebaseUser mFirebaseUser = mAuth.getCurrentUser ();
         if (mFirebaseUser !=null){
-            usersName.setText ("Welcome" +mFirebaseUser.getEmail ());
-
-
+            usersName.setText ("Welcome " +mFirebaseUser.getEmail ());
         }
-
     }
-
 }

@@ -9,6 +9,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,6 +40,7 @@ public class TeacherReg extends AppCompatActivity {
         final EditText phone = findViewById (R.id.phone);
         final EditText password = findViewById (R.id.password);
         final EditText passwordC = findViewById (R.id.ConfirmPassword);
+        final TextView isTeacher = findViewById (R.id.isTeach);
         final Button regButton = findViewById (R.id.registerButton);
 
         mAuth = FirebaseAuth.getInstance ();
@@ -52,6 +54,7 @@ public class TeacherReg extends AppCompatActivity {
                 String employeeNum = employeeID.getText ().toString ().trim ();
                 String Email = email.getText ().toString ().trim ();
                 String phone1 = phone.getText ().toString ().trim ();
+                Boolean isTeacher1 = Boolean.valueOf (isTeacher.getText ().toString ().trim ());
                 String password1 = password.getText ().toString ().trim ();
                 String password2 = passwordC.getText ().toString ().trim ();
 
@@ -73,6 +76,7 @@ public class TeacherReg extends AppCompatActivity {
                             teacher.put ("category", categors );
                             teacher.put ("employeeNum", employeeNum);
                             teacher.put ("Email", Email);
+                            teacher.put ("isTeacher", isTeacher1);
                             teacher.put ("phoneNum", phone1);
                             teacher.put ("password", password1);
 

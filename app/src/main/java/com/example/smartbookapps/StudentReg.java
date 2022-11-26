@@ -45,6 +45,7 @@ public class StudentReg extends AppCompatActivity {
         final EditText phone = findViewById (R.id.phone);
         final EditText password = findViewById (R.id.password);
         final EditText passwordC = findViewById (R.id.ConfirmPassword);
+        final TextView isStudent = findViewById (R.id.isStudent);
         final Button regButton = findViewById (R.id.registerButton);
         mAuth = FirebaseAuth.getInstance ();
         fStore =FirebaseFirestore.getInstance ();
@@ -59,6 +60,7 @@ public class StudentReg extends AppCompatActivity {
                 String Email = email.getText ().toString ().trim ();
                 String phone1 = phone.getText ().toString ().trim ();
                 String password1 = password.getText ().toString ().trim ();
+                Boolean isStudent1 = Boolean.valueOf (isStudent.getText ().toString ().trim ());
                 String password2 = passwordC.getText ().toString ().trim ();
 
                 if (!TextUtils.isEmpty (name) && !TextUtils.isEmpty (categors) && !TextUtils.isEmpty (matricNum) && !TextUtils.isEmpty (Email) && Patterns.EMAIL_ADDRESS.matcher (Email).matches () &&!TextUtils.isEmpty (phone1) &&  !TextUtils.isEmpty (password1) && !TextUtils.isEmpty (password2) ){
@@ -79,6 +81,7 @@ public class StudentReg extends AppCompatActivity {
                             student.put ("matricNum", matricNum);
                             student.put ("Email", Email);
                             student.put ("phoneNum", phone1);
+                            student.put ("isStudent", isStudent1);
                             student.put ("password", password1);
                             documentReference.set (student).addOnSuccessListener (new OnSuccessListener<Void> () {
                                 @Override

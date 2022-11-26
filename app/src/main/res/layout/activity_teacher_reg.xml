@@ -32,6 +32,7 @@
         android:paddingStart="20dp"
         android:paddingEnd="0dp" />
 
+
     <EditText
         android:layout_marginTop="20dp"
         android:id="@+id/categorgy"
@@ -104,6 +105,13 @@
         android:maxLines="1"
         android:paddingStart="20dp"
         android:paddingEnd="0dp" />
+    <TextView
+        android:id="@+id/isTeach"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text="true"
+        />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/registerButton"
