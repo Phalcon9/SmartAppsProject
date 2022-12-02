@@ -45,7 +45,7 @@ public class AttendanceResultAdapterTeach extends RecyclerView.Adapter<Attendanc
         holder.studCate.setText ("Teacher's Employee Number : " + list.get (position).getCategory ());
 
 
-        firebaseFirestore.collection ("student/"+list.get (position).getId ()+"/student's attendance")
+        firebaseFirestore.collection ("student/"+list.get (position).getId ()+"/teacher's attendance")
                 .addSnapshotListener (new EventListener<QuerySnapshot> () {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException error) {
