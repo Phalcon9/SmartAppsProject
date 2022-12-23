@@ -7,7 +7,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:background="@drawable/bg1"
-    tools:context=".TeacherLogin">
+    tools:context=".logins.TeacherLogin">
 
     <ImageView
         android:layout_marginTop="-60dp"

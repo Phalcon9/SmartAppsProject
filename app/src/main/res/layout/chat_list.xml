@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="9dp"
+
+    android:layout_marginTop="30dp"
+    >
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:padding="2dp">
+
+<!--        <TextView-->
+<!--            android:id="@+id/nam"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:text="@string/students_details"-->
+<!--            android:textColor="@color/lavender"-->
+<!--            android:textSize="26sp"-->
+<!--            android:textStyle="bold"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.491"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+        <TextView
+            android:id="@+id/namess"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:layout_marginTop="12dp"
+            android:text="First name"
+            android:textColor="@color/lavender"
+            app:layout_constraintBottom_toTopOf="@+id/matricNum"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.095"
+            app:layout_constraintStart_toStartOf="parent"
+   />
+
+        <TextView
+            android:id="@+id/matricNum"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:text="Kasu2020"
+            android:textColor="@color/lavender"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/namess"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/namess" />
+
+        <!--        <TextView-->
+<!--            android:id="@+id/cate"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="22dp"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:text="category"-->
+<!--            android:textColor="@color/lavender"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/matricNum"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/matricNum"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/matricNum" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/phoneNum"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="22dp"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:text="Phone Number"-->
+<!--            android:textColor="@color/lavender"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/cate"-->
+<!--            app:layout_constraintHorizontal_bias="0.052"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/cate"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/cate" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/email"-->
+<!--            android:layout_width="96dp"-->
+<!--            android:layout_height="22dp"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:text="Email"-->
+<!--            android:textColor="@color/lavender"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/nam"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/nam"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/nam" />-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/delete"-->
+<!--            android:layout_width="31dp"-->
+<!--            android:layout_height="32dp"-->
+<!--            android:layout_marginTop="4dp"-->
+<!--            android:src="@drawable/ic_delete"-->
+
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.844"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/phoneNum" />-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            tools:ignore="MissingConstraints">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/edit"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/ic_baseline_edit_24"-->
+<!--                android:visibility="gone"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                tools:layout_editor_absoluteY="26dp" />-->
+<!--        </LinearLayout>-->
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

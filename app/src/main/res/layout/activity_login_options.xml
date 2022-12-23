@@ -7,7 +7,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:background="@drawable/bg1"
-    tools:context=".LoginOptions">
+    tools:context=".logins.LoginOptions">
 
     <ImageView
         android:layout_width="100dp"
